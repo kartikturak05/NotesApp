@@ -4,10 +4,6 @@ export default function Home() {
   return (
     <>
       <TopicsList/>
-      <TopicsList/>
-      <TopicsList/>
-      <TopicsList/>
-      <TopicsList/>
     </>
   );
 }

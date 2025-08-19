@@ -1,16 +1,24 @@
-import React from 'react'
+import EditTopicForm from "@/components/EditTopicForm";
+import React from "react";
 
-const editTopic = () => {
-  return (
-    <form className='flex flex-col gap-3'>
-        <input className='border border-slate-500 px-8 py-2 ' type="text" placeholder='Topic Title'/>
-        <input className='border border-slate-500 px-8 py-2 ' type="text" placeholder='Topic Description'/>
+const getTopicById = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/topics/${id}`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch topic");
+    }
+    return res.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-        <button className='bg-green-600 font-bold  text-white py-3 px-6 w-fit'>
-            Edit Topic
-        </button>
-    </form>
-  )
-}
+const editTopic = async ({ params }) => {
+  const { id } = params;
 
-export default editTopic
+  const {topic} = await getTopicById(id);
+  const {title,description} = topic;
+  return <EditTopicForm id={id} title={title} description={description} />;
+};
+
+export default editTopic;
